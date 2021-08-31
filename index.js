@@ -1,11 +1,11 @@
-// 6 = Saturday, 0 = Sunday
-
-const SATURDAY = 6;
 const SUNDAY = 0;
 
-export function getMonth(_date) {
-  const date = new Date(_date);
-  date.setDate(1);
+/**
+ * @param year {number} 연도
+ * @param month {number} 달
+ */
+export function getMonth(year, month) {
+  const date = new Date(`${year}-${month}`);
 
   const beforeMonth = new Date(date);
   const nextMonth = new Date(date);
@@ -15,20 +15,20 @@ export function getMonth(_date) {
 
   const beforeMonthLastWeek = getLastWeek(beforeMonth);
   const nextMonthFirstWeek = getFirstWeek(nextMonth);
-  const month = getWeeks(date);
+  const weeks = getWeeks(date);
 
-  if (month[0].length < 7) {
-    const temp = [...beforeMonthLastWeek, ...month[0]];
-    month[0] = temp;
+  if (weeks[0].length < 7) {
+    const temp = [...beforeMonthLastWeek, ...weeks[0]];
+    weeks[0] = temp;
   }
 
-  const lastIndex = month.length - 1;
-  if (month[lastIndex].length < 7) {
-    const temp = [...month[lastIndex], ...nextMonthFirstWeek];
-    month[lastIndex] = temp;
+  const lastIndex = weeks.length - 1;
+  if (weeks[lastIndex].length < 7) {
+    const temp = [...weeks[lastIndex], ...nextMonthFirstWeek];
+    weeks[lastIndex] = temp;
   }
 
-  return month;
+  return weeks;
 }
 
 function getWeeks(_date) {
